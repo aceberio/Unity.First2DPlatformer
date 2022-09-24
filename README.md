@@ -1,1 +1,16 @@
 # Unity.First2DPlatformer
+- Test https://aceberio.github.io/Unity.First2DPlatformer/
+- 2D.
+- Sprites.
+- Colliders.
+- Rigid bodies.
+- Physic materials.
+- Prefabs.
+- Scripts.
+- Component hierarchy.
+- Movement.
+- Multiple jump.
+- Handle camera limits.
+- Sorting layers.
+- Publish WebGL and host in GitHub Pages.
+- Ground check with layer mask overlap detection.
