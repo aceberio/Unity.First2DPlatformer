@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     private float _initialY;
     private bool _facingRight = true;
     private bool _isGrounded;
-    private int _extraJumpsRemaining;
+    private int _remainingExtraJumps;
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _renderer;
 
@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
         Vector3 position = transform.position;
         _initialX = position.x;
         _initialY = position.y;
-        _extraJumpsRemaining = ExtraJumps;
+        _remainingExtraJumps = ExtraJumps;
         _rigidbody = GetComponent<Rigidbody2D>();
         _renderer = GetComponent<SpriteRenderer>();
     }
@@ -71,15 +71,16 @@ public class PlayerController : MonoBehaviour
             _rigidbody.velocity = Vector2.up * JumpForce;
         }
 
+        if (!Input.GetKeyDown(KeyCode.Space)) return;
+
         if (_isGrounded)
-            _extraJumpsRemaining = ExtraJumps;
-        if (Input.GetKeyDown(KeyCode.Space) && _extraJumpsRemaining > 0)
         {
+            _remainingExtraJumps = ExtraJumps;
             DoJump();
-            _extraJumpsRemaining--;
         }
-        else if (Input.GetKeyDown(KeyCode.Space) && _extraJumpsRemaining == 0 && _isGrounded)
+        else if (_remainingExtraJumps > 0)
         {
+            _remainingExtraJumps--;
             DoJump();
         }
     }
