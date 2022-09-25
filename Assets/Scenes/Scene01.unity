@@ -505,7 +505,7 @@ MonoBehaviour:
     m_Bits: 72
   <Speed>k__BackingField: 7
   <JumpForce>k__BackingField: 7
-  <ExtraJumps>k__BackingField: 1
+  <JumpsInTheAir>k__BackingField: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     private float _initialY;
     private bool _facingRight = true;
     private bool _isGrounded;
-    private int _remainingExtraJumps;
+    private int _jumpsInTheAir;
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _renderer;
 
@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField] public LayerMask WhatIsGround { get; set; }
     [field: SerializeField] public float Speed { get; set; }
     [field: SerializeField] public float JumpForce { get; set; }
-    [field: SerializeField] public int ExtraJumps { get; set; }
+    [field: SerializeField] public int JumpsInTheAir { get; set; }
 
 
     private void Start()
@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
         Vector3 position = transform.position;
         _initialX = position.x;
         _initialY = position.y;
-        _remainingExtraJumps = ExtraJumps;
+        _jumpsInTheAir = JumpsInTheAir;
         _rigidbody = GetComponent<Rigidbody2D>();
         _renderer = GetComponent<SpriteRenderer>();
     }
@@ -66,22 +66,23 @@ public class PlayerController : MonoBehaviour
 
     private void HandleJumps()
     {
-        void DoJump()
-        {
-            _rigidbody.velocity = Vector2.up * JumpForce;
-        }
+        void DoJump() => _rigidbody.velocity = Vector2.up * JumpForce;
+
+        if (_isGrounded)
+            _jumpsInTheAir = JumpsInTheAir;
 
         if (!Input.GetKeyDown(KeyCode.Space)) return;
 
-        if (_isGrounded)
+        switch (_jumpsInTheAir)
         {
-            _remainingExtraJumps = ExtraJumps;
-            DoJump();
-        }
-        else if (_remainingExtraJumps > 0)
-        {
-            _remainingExtraJumps--;
-            DoJump();
+            case > 0:
+                DoJump();
+                _jumpsInTheAir--;
+                break;
+
+            case 0 when _isGrounded:
+                DoJump();
+                break;
         }
     }
 }
